@@ -1,10 +1,10 @@
 # AIOMovie Design Document
 
 ### Advanced sketch
-<img src="https://github.com/toxintractor/AIOMovie/blob/master/advanced%20sketch.png?raw=true">
+<img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/advanced%20sketch.png?raw=true">
 
 ### Class diagrams
-<img src="https://github.com/toxintractor/AIOMovie/blob/master/diagrams.png?raw=true">
+<img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/diagrams.png?raw=true">
 
 ### Data
 Alle Data is van API's afkomstig. Ik heb ook toegang tot alle API's.  

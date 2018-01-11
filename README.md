@@ -9,7 +9,7 @@ In deze app kan men een film zoeken en daarbij gelijk een prijs krijgen om een f
 Deze All-in-one-App laat men films, zoeken, reviews bekijken, uitproberen en kopen.
 
 ### Visual sketch
-<img src="https://raw.githubusercontent.com/toxintractor/AIOMovie/master/visual_scetch.png" width="800"> 
+<img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/visual_scetch.png?raw=true" width="800">
 
 ### API's and libraries
 Voor de App worden 3 api's gebruikt. Namelijk de Bol.com API(Dit zou ook een andere kunnen worden). Een TMDB API, en een Yify API. Ik heb toegang tot alle API's.
