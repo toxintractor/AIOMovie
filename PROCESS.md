@@ -13,3 +13,4 @@ Storm!
 #19-01
 
 #22-01
+Om 11:00 een standup gehad met het team. Een paar handige tips gekregen.

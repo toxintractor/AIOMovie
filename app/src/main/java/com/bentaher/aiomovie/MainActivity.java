@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,23 +23,24 @@ import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
+    EditText filmName;
     Spinner genre, jaar;
     Button buttonSearch;
     TextView txtJson;
 
-    RequestQueue mQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        filmName = (EditText) findViewById(R.id.taakNaam);
         genre = (Spinner) findViewById(R.id.spinnerGenre);
         jaar = (Spinner) findViewById(R.id.spinnerJaar);
         buttonSearch = (Button) findViewById(R.id.btnSearch);
         txtJson = (TextView) findViewById(R.id.textJson);
 
-        mQueue = Volley.newRequestQueue(this);
 
         buttonSearch.setOnClickListener(new MainActivity.Search());
 
@@ -51,38 +53,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            jsonParse();
+            String searchFilmname = filmName.getText().toString();
+            Intent jumpPage = new Intent(MainActivity.this, SearchResultActivity.class);
+            jumpPage.putExtra("JsonText", searchFilmname);
+            startActivity(jumpPage);
 
         }
     }
 
-    public void jsonParse(){
-        String url = "https://yts.am/api/v2/list_movies.json?query_term=batman%v%superman";
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                        JSONObject jsonArray =  new JSONObject();
-                        JSONArray jsonArray1 = new JSONArray();
-                        try {
-                            jsonArray = response.getJSONObject("data");
-                            jsonArray1 = jsonArray.getJSONArray("movies");
-                            txtJson.append(jsonArray1.toString());
-                            Log.d("Array", jsonArray1.toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-            }
-        });
-        mQueue.add(request);
-    }
 
 }
