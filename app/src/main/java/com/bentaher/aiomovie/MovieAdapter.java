@@ -1,6 +1,7 @@
 package com.bentaher.aiomovie;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,10 +50,30 @@ public class MovieAdapter extends ArrayAdapter {
         nameTxt.setText(mvieTitle);
         ratingTxt.setText(mvieRating);
 
+        view.setOnClickListener(new GetOptions(tk));
+
         return view;
     }
 
     public int getCount(){
         return  super.getCount();
     }
+
+    public class GetOptions implements View.OnClickListener {
+
+        Movie tk1;
+        public GetOptions(Movie tk2){
+            tk1 = tk2;
+        }
+        @Override
+        public void onClick(View view) {
+
+            Intent jumpPage = new Intent(context, MovieOptionActivity.class);
+            jumpPage.putExtra("movieData", tk1);
+            context.startActivity(jumpPage);
+
+        }
+    }
+
 }
+
