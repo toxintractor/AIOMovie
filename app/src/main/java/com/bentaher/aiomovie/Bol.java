@@ -1,0 +1,37 @@
+package com.bentaher.aiomovie;
+
+import java.io.Serializable;
+
+/**
+ * Created by mocro on 29/01/2018.
+ */
+
+public class Bol implements Serializable {
+
+    public String title;
+    public String type;
+    public String price;
+    public String shopLink;
+
+    public Bol(String title, String type, String price, String shopLink){
+
+        this.title = title;
+        this.type = type;
+        this.price = price;
+        this.shopLink = shopLink;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+    public String getType(){
+        return type;
+    }
+    public String getPrice(){
+        return price;
+    }
+    public String getShopLink(){
+        return shopLink;
+    }
+
+}

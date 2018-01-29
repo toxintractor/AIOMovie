@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     Button buttonSearch;
     TextView txtJson;
 
-    ArrayList<Movie> movieArray = new ArrayList<>();
+
 
 
 
@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+
+                        ArrayList<Movie> movieArray = new ArrayList<>();
 
                         JSONArray jsonArray = new JSONArray();
                         String title, id, rating, genres, story, year;

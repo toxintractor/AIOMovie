@@ -20,7 +20,9 @@
         </activity>
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".MovieOptionActivity" />
-        <activity android:name=".MovieListActivity"></activity>
+        <activity android:name=".MovieListActivity" />
+        <activity android:name=".TorrentResultActivity" />
+        <activity android:name=".BolResultActivity"></activity>
     </application>
 
 </manifest>
