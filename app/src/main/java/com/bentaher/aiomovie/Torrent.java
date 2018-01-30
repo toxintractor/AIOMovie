@@ -12,15 +12,17 @@ public class Torrent implements Serializable {
     public String resolution;
     public String size;
     public String sitelink;
+    public String imagelink;
     public String magnetlink;
 
     //constructor om alle elemten informatie te verkrijgen.
-    public Torrent(String title, String resolution, String size, String sitelink, String magnetlink){
+    public Torrent(String title, String resolution, String size, String sitelink, String imagelink, String magnetlink){
 
         this.title = title;
         this.resolution = resolution;
         this.size = size;
         this.sitelink = sitelink;
+        this.imagelink = imagelink;
         this.magnetlink = magnetlink;
     }
 
@@ -35,6 +37,9 @@ public class Torrent implements Serializable {
     }
     public String getSitelink(){
         return sitelink;
+    }
+    public String getImagelink(){
+        return imagelink;
     }
     public String getMagnetlink(){
         return magnetlink;

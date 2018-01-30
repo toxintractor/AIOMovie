@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         ArrayList<Movie> movieArray = new ArrayList<>();
 
                         JSONArray jsonArray = new JSONArray();
-                        String title, id, rating, genres, story, year;
+                        String title, id, rating, imageLink, genres, story, year;
 
 
                         try {
@@ -96,11 +96,13 @@ public class MainActivity extends AppCompatActivity {
                                 title = jsonArray.getJSONObject(i).getString("title");
                                 id = jsonArray.getJSONObject(i).getString("id");
                                 rating = jsonArray.getJSONObject(i).getString("vote_average");
+                                imageLink = "http://image.tmdb.org/t/p/w185/" + jsonArray.getJSONObject(i).getString("poster_path");
                                 genres = jsonArray.getJSONObject(i).getString("genre_ids");
                                 story = jsonArray.getJSONObject(i).getString("overview");
                                 year = jsonArray.getJSONObject(i).getString("release_date");
+                                Log.i("Array", imageLink);
 
-                                Movie movies = new Movie(title, id, rating, genres, story, year, null);
+                                Movie movies = new Movie(title, id, rating, imageLink, genres, story, year, null);
                                 movieArray.add(movies);
                                 txtJson.append(title + "\n");
                             }
@@ -109,9 +111,6 @@ public class MainActivity extends AppCompatActivity {
                             jumpPage.putExtra("JsonText", movieArray);
                             startActivity(jumpPage);
 
-                            for (Movie a: movieArray) {
-                                Log.i("Array", a.getTitle()+ " - " + a.getRating()+ " - " + a.getGenres()+ " - " + a.getStory());
-                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

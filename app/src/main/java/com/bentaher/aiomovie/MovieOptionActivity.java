@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -24,8 +25,8 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     TextView txtName, txtStory;
     Movie movie;
+    ImageView torrentImage, bolImage;
 
-    ArrayList<Torrent> torrentArray = new ArrayList<>();
 
 
     @Override
@@ -35,14 +36,16 @@ public class MovieOptionActivity extends AppCompatActivity {
 
         txtName = (TextView) findViewById(R.id.movieTxt);
         txtStory = (TextView) findViewById(R.id.storyTxt);
+        torrentImage = (ImageView) findViewById(R.id.torrentBtn);
+        bolImage = (ImageView) findViewById(R.id.buyBtn);
 
         movie = (Movie) getIntent().getSerializableExtra("movieData");
 
         txtName.setText(movie.getTitle() + " - " + movie.getYear().substring(0, movie.getYear().indexOf("-")));
         txtStory.setText(movie.getStory());
 
-
-
+        torrentImage.setOnClickListener(new MovieOptionActivity.GetTorrents());
+        bolImage.setOnClickListener(new MovieOptionActivity.GetBol());
 
 
     }
@@ -66,7 +69,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-            bolParse(movie.getTitle());
+            bolParse();
 
         }
     }
@@ -128,9 +131,11 @@ public class MovieOptionActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
+                        ArrayList<Torrent> torrentArray = new ArrayList<>();
+
                         JSONObject jsonObject = new JSONObject();
                         JSONArray jsonArray = new JSONArray();
-                        String title, year, resolution, size, sitelink, magnetlink;
+                        String title, year, resolution, size, sitelink, imageLink, magnetlink;
 
                         try {
                             jsonObject = response.getJSONObject("data");
@@ -139,8 +144,7 @@ public class MovieOptionActivity extends AppCompatActivity {
                             for(int i=0; i < jsonArray.length(); i++){
                                 title = jsonArray.getJSONObject(i).getString("title");
                                 year = jsonArray.getJSONObject(i).getString("year");
-
-                                Log.i("torrent title:",year + " - " + searchYear);
+                                imageLink = jsonArray.getJSONObject(i).getString("medium_cover_image");
 
                                 JSONArray torrentJsonArray = new JSONArray();
 
@@ -154,7 +158,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
                                     Log.i("torrent title:", size + " - "+ resolution + " - "+ torrentJsonArray.length());
 
-                                    Torrent torrent = new Torrent(title, resolution, size, sitelink, magnetlink);
+                                    Torrent torrent = new Torrent(title, resolution, size, sitelink, imageLink, magnetlink);
                                     torrentArray.add(torrent);
                                 }
                             }
@@ -177,13 +181,14 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
-    public void bolParse(String movieTitle){
+    public void bolParse(){
 
         RequestQueue mQueue;
         mQueue = Volley.newRequestQueue(this);
 
-        String bolUrl = "https://api.bol.com/catalog/v4/search/?q=" + movieTitle + "&offset=0&limit=20&dataoutput=products,categories&apikey=C46AD0F51E7D43E2B1EE160AEE827820&format=json";
+        String bolUrl = "https://api.bol.com/catalog/v4/search/?q=" + movie.getTitle() + "&offset=0&limit=40&dataoutput=products,categories&apikey=C46AD0F51E7D43E2B1EE160AEE827820&format=json";
 
+        Log.i("check true:", movie.getTitle());
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, bolUrl, null,
                 new Response.Listener<JSONObject>() {
@@ -195,7 +200,7 @@ public class MovieOptionActivity extends AppCompatActivity {
                         JSONArray jsonArray, offerArray, linkArray = new JSONArray();
                         JSONObject offerData = new JSONObject();
 
-                        String title, type, price, shopLink;
+                        String title, type, price, shopLink, imageLink;
 
                         try {
                             jsonArray = response.getJSONArray("products");
@@ -214,10 +219,22 @@ public class MovieOptionActivity extends AppCompatActivity {
 
                                     linkArray = jsonArray.getJSONObject(i).getJSONArray("urls");
                                     shopLink = linkArray.getJSONObject(0).getString("value");
+                                    if(jsonArray.getJSONObject(i).has("images")){
+                                        linkArray = jsonArray.getJSONObject(i).getJSONArray("images");
+                                        if(linkArray.getJSONObject(3).has("url")){
+                                            imageLink = linkArray.getJSONObject(3).getString("url");
+                                        }
+                                        else{
+                                            imageLink = "https://s.s-bol.com/nl/static/images/main/noimage_124x100default.gif";
+                                        }
 
-                                    Log.i("check true:", shopLink);
+                                    }
+                                    else{
+                                        imageLink = "https://s.s-bol.com/nl/static/images/main/noimage_124x100default.gif";
+                                    }
 
-                                    Bol bol = new Bol(title, type, price, shopLink);
+
+                                    Bol bol = new Bol(title, type, price, shopLink, imageLink);
                                     bolArray.add(bol);
 
 

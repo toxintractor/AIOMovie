@@ -1,5 +1,6 @@
 package com.bentaher.aiomovie;
 
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -20,6 +21,8 @@ public class BolResultActivity extends AppCompatActivity {
         bolArray = (ArrayList<Bol>) getIntent().getSerializableExtra("dataArray");
 
         setAdapter();
+
+
 
     }
 

@@ -12,13 +12,15 @@ public class Bol implements Serializable {
     public String type;
     public String price;
     public String shopLink;
+    public String imageLink;
 
-    public Bol(String title, String type, String price, String shopLink){
+    public Bol(String title, String type, String price, String shopLink, String imageLink){
 
         this.title = title;
         this.type = type;
         this.price = price;
         this.shopLink = shopLink;
+        this.imageLink = imageLink;
     }
 
     public String getTitle(){
@@ -32,6 +34,9 @@ public class Bol implements Serializable {
     }
     public String getShopLink(){
         return shopLink;
+    }
+    public String getImageLink(){
+        return imageLink;
     }
 
 }

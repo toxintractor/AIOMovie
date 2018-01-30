@@ -1,12 +1,17 @@
 package com.bentaher.aiomovie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,20 +46,37 @@ public class BolAdapter extends ArrayAdapter {
 
         final String mvieTitle = tk.getTitle();
         final String mviePrice = tk.getPrice();
+        final String mvieImage = tk.getImageLink();
 
         final TextView movieNm = (TextView) view.findViewById(R.id.bolName);
         final TextView moviePrc = (TextView) view.findViewById(R.id.bolPrice);
+        final ImageView movieImg = (ImageView) view.findViewById(R.id.bolImage);
 
         movieNm.setText(mvieTitle);
         moviePrc.setText(mviePrice);
+        Picasso.with(context).load(mvieImage).into(movieImg);
 
-        //view.setOnClickListener(new MovieAdapter.GetOptions(tk));
+        view.setOnClickListener(new BolAdapter.GoLink(tk));
 
         return view;
     }
 
     public int getCount(){
         return  super.getCount();
+    }
+
+    public class GoLink implements View.OnClickListener {
+
+        Bol tk1;
+        public GoLink(Bol tk2){
+            tk1 = tk2;
+        }
+        @Override
+        public void onClick(View view) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tk1.getShopLink()));
+            context.startActivity(browserIntent);
+
+        }
     }
 
 }

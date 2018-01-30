@@ -1,12 +1,19 @@
 package com.bentaher.aiomovie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -42,20 +49,40 @@ public class TorrentAdapter extends ArrayAdapter {
 
         final String mvieTitle = tk.getTitle();
         final String mvieSize= tk.getSize();
+        final String mvieImage= tk.getImagelink();
+
+        Log.i("torrent iamge:", mvieImage);
 
         final TextView torrentNm = (TextView) view.findViewById(R.id.torrentName);
         final TextView torrentSz = (TextView) view.findViewById(R.id.torrentSize);
+        final ImageView torrentImg = (ImageView) view.findViewById(R.id.imageTrnt);
 
         torrentNm.setText(mvieTitle);
-        torrentNm.setText(mvieSize);
+        torrentSz.setText(mvieSize);
 
-        //view.setOnClickListener(new MovieAdapter.GetOptions(tk));
+        Picasso.with(context).load(mvieImage).into(torrentImg);
+
+        view.setOnClickListener(new TorrentAdapter.GoLink(tk));
 
         return view;
     }
 
     public int getCount(){
         return  super.getCount();
+    }
+
+    public class GoLink implements View.OnClickListener {
+
+        Torrent tk1;
+        public GoLink(Torrent tk2){
+            tk1 = tk2;
+        }
+        @Override
+        public void onClick(View view) {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(tk1.getMagnetlink()));
+            context.startActivity(browserIntent);
+
+        }
     }
 
 }

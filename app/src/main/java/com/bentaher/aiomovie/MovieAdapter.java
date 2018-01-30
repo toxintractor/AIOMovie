@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -43,12 +46,16 @@ public class MovieAdapter extends ArrayAdapter {
 
         final String mvieTitle = tk.getTitle();
         final String mvieRating= tk.getRating();
+        final String mvieImage = tk.getImageLink();
 
         final TextView nameTxt = (TextView) view.findViewById(R.id.movieName);
         final TextView ratingTxt = (TextView) view.findViewById(R.id.movieRating);
+        final ImageView imageLnk = (ImageView) view.findViewById(R.id.movieImage);
 
         nameTxt.setText(mvieTitle);
         ratingTxt.setText(mvieRating);
+
+        Picasso.with(context).load(mvieImage).into(imageLnk);
 
         view.setOnClickListener(new GetOptions(tk));
 
