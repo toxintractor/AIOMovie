@@ -2,6 +2,7 @@ package com.bentaher.aiomovie;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.TextView;
@@ -58,7 +59,8 @@ public class ReviewsActivity extends AppCompatActivity {
                                 author = jsonArray.getJSONObject(i).getString("author");
                                 review = jsonArray.getJSONObject(i).getString("content");
                                 Log.i("ID:", review);
-                                reviewText.append(author + ":\n" + review + "\n\n");
+                                reviewText.append(Html.fromHtml( "<b>"+ author +"</b>" ));
+                                reviewText.append(":\n" + review + "\n\n");
 
                             }
 
