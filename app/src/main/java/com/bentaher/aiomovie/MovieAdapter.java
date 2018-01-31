@@ -48,14 +48,13 @@ public class MovieAdapter extends ArrayAdapter {
         final String mvieRating= tk.getRating();
         final String mvieImage = tk.getImageLink();
 
+        final ImageView imageLnk = (ImageView) view.findViewById(R.id.movieImage);
         final TextView nameTxt = (TextView) view.findViewById(R.id.movieName);
         final TextView ratingTxt = (TextView) view.findViewById(R.id.movieRating);
-        final ImageView imageLnk = (ImageView) view.findViewById(R.id.movieImage);
-
-        nameTxt.setText(mvieTitle);
-        ratingTxt.setText(mvieRating);
 
         Picasso.with(context).load(mvieImage).into(imageLnk);
+        nameTxt.setText(mvieTitle);
+        ratingTxt.setText(mvieRating);
 
         view.setOnClickListener(new GetOptions(tk));
 

@@ -48,13 +48,13 @@ public class BolAdapter extends ArrayAdapter {
         final String mviePrice = tk.getPrice();
         final String mvieImage = tk.getImageLink();
 
+        final ImageView movieImg = (ImageView) view.findViewById(R.id.bolImage);
         final TextView movieNm = (TextView) view.findViewById(R.id.bolName);
         final TextView moviePrc = (TextView) view.findViewById(R.id.bolPrice);
-        final ImageView movieImg = (ImageView) view.findViewById(R.id.bolImage);
 
+        Picasso.with(context).load(mvieImage).into(movieImg);
         movieNm.setText(mvieTitle);
         moviePrc.setText(mviePrice);
-        Picasso.with(context).load(mvieImage).into(movieImg);
 
         view.setOnClickListener(new BolAdapter.GoLink(tk));
 

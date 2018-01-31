@@ -7,6 +7,10 @@
     android:orientation="vertical"
     tools:context="com.bentaher.aiomovie.MainActivity">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <TextView
         android:id="@+id/textBeschrijving"
         android:layout_width="match_parent"
