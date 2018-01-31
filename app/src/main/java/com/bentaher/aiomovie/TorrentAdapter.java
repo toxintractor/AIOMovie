@@ -49,16 +49,19 @@ public class TorrentAdapter extends ArrayAdapter {
 
         final String mvieTitle = tk.getTitle();
         final String mvieSize= tk.getSize();
+        final String mvieRes = tk.getResolution();
         final String mvieImage= tk.getImagelink();
 
         Log.i("torrent iamge:", mvieImage);
 
         final ImageView torrentImg = (ImageView) view.findViewById(R.id.imageTrnt);
         final TextView torrentNm = (TextView) view.findViewById(R.id.torrentName);
+        final TextView torrentRs = (TextView) view.findViewById(R.id.torrentRes);
         final TextView torrentSz = (TextView) view.findViewById(R.id.torrentSize);
 
         Picasso.with(context).load(mvieImage).into(torrentImg);
         torrentNm.setText(mvieTitle);
+        torrentRs.setText(mvieRes);
         torrentSz.setText(mvieSize);
 
         view.setOnClickListener(new TorrentAdapter.GoLink(tk));

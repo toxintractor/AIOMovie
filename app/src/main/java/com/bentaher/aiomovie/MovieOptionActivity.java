@@ -1,8 +1,10 @@
 package com.bentaher.aiomovie;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -305,7 +307,10 @@ public class MovieOptionActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
 
-                        txtStory.append("\n\nActors:\n");
+                        txtStory.append("\n\n");
+                        txtStory.append(Html.fromHtml( "<b>Actors:</b>" ));
+                        txtStory.append("\n");
+
                         String actor;
                         JSONArray jsonArray = new JSONArray();
 

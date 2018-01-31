@@ -25,36 +25,27 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
+        android:textColor="#000"
         android:text="SEARCH"
         android:textColorLink="@android:color/background_dark" />
 
     <EditText
-        android:id="@+id/taakNaam"
+        android:id="@+id/movieNM"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:layout_gravity="center"
         android:width="200dp"
-        android:hint="Naam"/>
+        android:hint="Name"/>
 
     <EditText
-        android:id="@+id/taakBeschrijving"
+        android:id="@+id/keyWrd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:layout_gravity="center"
         android:width="200dp"
-        android:hint="Sleutelwoord"/>
-
-    <Spinner
-        android:id="@+id/spinnerGenre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Spinner
-        android:id="@+id/spinnerJaar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:hint="Keyword"/>
 
     <Button
         android:id="@+id/btnSearch"
