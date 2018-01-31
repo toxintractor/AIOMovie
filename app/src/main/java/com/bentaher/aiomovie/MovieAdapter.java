@@ -45,6 +45,7 @@ public class MovieAdapter extends ArrayAdapter {
         final Movie tk = movieList.get(position);
 
         final String mvieTitle = tk.getTitle();
+        final String mvieYear = tk.getYear();
         final String mvieRating= tk.getRating();
         final String mvieImage = tk.getImageLink();
 
@@ -53,8 +54,8 @@ public class MovieAdapter extends ArrayAdapter {
         final TextView ratingTxt = (TextView) view.findViewById(R.id.movieRating);
 
         Picasso.with(context).load(mvieImage).into(imageLnk);
-        nameTxt.setText(mvieTitle);
-        ratingTxt.setText(mvieRating);
+        nameTxt.setText(mvieTitle + "(" + mvieYear.substring(0, mvieYear.indexOf("-")) + ")");
+        ratingTxt.setText("Rating: " + mvieRating);
 
         view.setOnClickListener(new GetOptions(tk));
 
