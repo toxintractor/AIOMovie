@@ -3,7 +3,7 @@
 ### Description
 De AIOMovie app laat de gebruiker een film zoeken. Daarna heeft de gebruiker de keuze om de film
 gelijk te kopen of eerst via Torrent te downloaden. Men kan een lijst van films krijgen van films
-die door Bol.com worden en een Lijst een Torrents van Yify.
+die door Bol.com worden verkocht en een Lijst een Torrents van Yify.
 
 ### Design
 
