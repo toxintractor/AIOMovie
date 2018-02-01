@@ -15,6 +15,27 @@ die door Bol.com worden en een Lijst een Torrents van Yify.
 <img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/finaladvacnedsketch.png?raw=true">
 <img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/finaldiagrams.png?raw=true">
 
+In de eerste activity kan men een film zoeken via de naam van de film of een keyword. Daarna worden
+de resulaten van de TMDB API in een Arraylist van de Movie Class. Als men een film kiest word de
+data van de Class meegnomen naar de MovieOptionActivity. Daarin wordt het verhaal uit de Class 
+gehaad en via een request de acteurs ingeladen. Voor de acteurs heb je een apparte request nodig.
+
+Men kan de reviews lezen, dat word via een request in een apparte activity geladen. Hiervoor heb ik
+geen appart Class gebruikt. Dit achte ik niet nodig. 
+
+Via een apparte request kunnen gerelateerde
+films gezocht worden, die worden ingeladen en behandelt zoals het film zoeken op de eerste activity.
+Dezelfde adapter wordt gebruikt.
+
+Men kan ervoor kiezen om de film te downloaden via de Yify API. Hiervoor wordt de IMDB code 
+opgevraagd in de TMDB Api via een request. Deze code stopt wordt dan in een reqeust gestopt van de
+Yify API. De resultaten worden ingeladen in een Arraylist van Torrent Class objecten. Deze worden 
+getoont in de Torrent Activity. Hier kan een torrent gedownload worden.
+
+Men kan er ook voor kiezen om de film te kopen. De filmnaam wordt in de request gestopt van de 
+Bol.com API. Hier komen allerlei resultaten uit. De films filter ik hieruit en stop ik in de 
+Arraylist Bol Classen. Hier kan men een film kiezen.
+
 ### Challenges
 De grootste "challanges" waren het parsen van de JSON van de TMDB en Yify API. Omdat de sites vaak 
 crowdsourced zijn, ontbreekt er vaak informatie in de JSON objecten. Hier moet vaak rekening mee 
