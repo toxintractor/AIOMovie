@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -59,6 +60,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Onclick listener om de reviews op te vragen.
     public class GetReviews implements View.OnClickListener {
 
         public GetReviews(){
@@ -73,6 +75,7 @@ public class MovieOptionActivity extends AppCompatActivity {
         }
     }
 
+    //Onlick listener om de gerelateerde films op te vragen.
     public class GetRelated implements View.OnClickListener {
 
         public GetRelated(){
@@ -81,10 +84,10 @@ public class MovieOptionActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             relatedParse();
-
         }
     }
 
+    //Onclick listener om de torrents op te vragen.
     public class GetTorrents implements View.OnClickListener {
 
         public GetTorrents(){
@@ -97,6 +100,7 @@ public class MovieOptionActivity extends AppCompatActivity {
         }
     }
 
+    //Onlick listener om de Bol.com producten op te vragen.
     public class GetBol implements View.OnClickListener {
 
         public GetBol(){
@@ -110,11 +114,8 @@ public class MovieOptionActivity extends AppCompatActivity {
     }
 
 
-
+    //Functie om de IMDB code te verkrijgen
     public void jsonIMDBParse(){
-
-        String searchFilmname = movie.getTitle();
-        String searchYear = movie.getYear().substring(0, movie.getYear().indexOf("-"));
 
         RequestQueue mQueue;
         mQueue = Volley.newRequestQueue(this);
@@ -131,13 +132,11 @@ public class MovieOptionActivity extends AppCompatActivity {
                         try {
                             imdbId = response.getString("imdb_id");
                             Log.i("imdb code", imdbId);
-
                             jsonYifyParse(imdbId);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -150,16 +149,14 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Functie om de torrent gegevens te parsen uit de Yify API.
     public void jsonYifyParse(String IMDBId){
-
-        String searchFilemname = movie.getTitle();
-        final String searchYear = movie.getYear().substring(0, movie.getYear().indexOf("-"));
 
         RequestQueue mQueue;
         mQueue = Volley.newRequestQueue(this);
 
+        //Request aan de hand van de IMDB code
         String yifyUrl = "https://yts.am/api/v2/list_movies.json?query_term=" + IMDBId;
-
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, yifyUrl, null,
                 new Response.Listener<JSONObject>() {
@@ -172,38 +169,43 @@ public class MovieOptionActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray();
                         String title, year, resolution, size, sitelink, imageLink, magnetlink;
 
+                        //Parsen van de Yify API Json
                         try {
                             jsonObject = response.getJSONObject("data");
-                            jsonArray = jsonObject.getJSONArray("movies");
 
-                            for(int i=0; i < jsonArray.length(); i++){
-                                title = jsonArray.getJSONObject(i).getString("title");
-                                year = jsonArray.getJSONObject(i).getString("year");
-                                imageLink = jsonArray.getJSONObject(i).getString("medium_cover_image");
-
-                                JSONArray torrentJsonArray = new JSONArray();
-
-
-                                torrentJsonArray = jsonArray.getJSONObject(i).getJSONArray("torrents");
-                                for(int k=0; k < torrentJsonArray.length(); k++){
-                                    resolution = torrentJsonArray.getJSONObject(k).getString("quality");
-                                    size = torrentJsonArray.getJSONObject(k).getString("size");
-                                    sitelink = torrentJsonArray.getJSONObject(k).getString("url");
-                                    magnetlink = torrentJsonArray.getJSONObject(k).getString("url");
-
-                                    Log.i("torrent title:", size + " - "+ resolution + " - "+ torrentJsonArray.length());
-
-                                    Torrent torrent = new Torrent(title, resolution, size, sitelink, imageLink, magnetlink);
-                                    torrentArray.add(torrent);
-                                }
+                            if (!jsonObject.has("movies")){
+                                Toast.makeText(MovieOptionActivity.this, "No Torrents found", Toast.LENGTH_SHORT).show();
                             }
+                            else{
+                                jsonArray = jsonObject.getJSONArray("movies");
 
-                            goToTorrent(torrentArray);
+                                for(int i=0; i < jsonArray.length(); i++){
+                                    title = jsonArray.getJSONObject(i).getString("title");
+                                    year = jsonArray.getJSONObject(i).getString("year");
+                                    imageLink = jsonArray.getJSONObject(i).getString("medium_cover_image");
+
+                                    JSONArray torrentJsonArray = new JSONArray();
+
+
+                                    torrentJsonArray = jsonArray.getJSONObject(i).getJSONArray("torrents");
+                                    for(int k=0; k < torrentJsonArray.length(); k++){
+                                        resolution = torrentJsonArray.getJSONObject(k).getString("quality");
+                                        size = torrentJsonArray.getJSONObject(k).getString("size");
+                                        sitelink = torrentJsonArray.getJSONObject(k).getString("url");
+                                        magnetlink = torrentJsonArray.getJSONObject(k).getString("url");
+
+                                        Log.i("torrent title:", size + " - "+ resolution + " - "+ torrentJsonArray.length());
+
+                                        Torrent torrent = new Torrent(title, resolution, size, sitelink, imageLink, magnetlink);
+                                        torrentArray.add(torrent);
+                                    }
+                                }
+                                goToTorrent(torrentArray);
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
 
                     }
                 }, new Response.ErrorListener() {
@@ -216,6 +218,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Parsen van de Bol.com API.
     public void bolParse(){
 
         RequestQueue mQueue;
@@ -237,47 +240,54 @@ public class MovieOptionActivity extends AppCompatActivity {
 
                         String title, type, price, shopLink, imageLink;
 
+                        //Parsen van de Json response.
                         try {
-                            jsonArray = response.getJSONArray("products");
+                            if(!response.has("products")){
+                                Toast.makeText(MovieOptionActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                jsonArray = response.getJSONArray("products");
 
 
-                            for(int i=0; i < jsonArray.length(); i++){
+                                for(int i=0; i < jsonArray.length(); i++){
 
-                                if(jsonArray.getJSONObject(i).getString("gpc").equals("dvdmo")){
+                                    if(jsonArray.getJSONObject(i).getString("gpc").equals("dvdmo")){
 
-                                    title = jsonArray.getJSONObject(i).getString("title");
-                                    type = jsonArray.getJSONObject(i).getString("summary");
+                                        title = jsonArray.getJSONObject(i).getString("title");
+                                        type = jsonArray.getJSONObject(i).getString("summary");
 
-                                    offerData = jsonArray.getJSONObject(i).getJSONObject("offerData");
-                                    offerArray = offerData.getJSONArray("offers");
-                                    price = offerArray.getJSONObject(0).getString("price");
+                                        offerData = jsonArray.getJSONObject(i).getJSONObject("offerData");
+                                        offerArray = offerData.getJSONArray("offers");
+                                        price = offerArray.getJSONObject(0).getString("price");
 
-                                    linkArray = jsonArray.getJSONObject(i).getJSONArray("urls");
-                                    shopLink = linkArray.getJSONObject(0).getString("value");
-                                    if(jsonArray.getJSONObject(i).has("images")){
-                                        linkArray = jsonArray.getJSONObject(i).getJSONArray("images");
-                                        if(linkArray.getJSONObject(3).has("url")){
-                                            imageLink = linkArray.getJSONObject(3).getString("url");
+                                        linkArray = jsonArray.getJSONObject(i).getJSONArray("urls");
+                                        shopLink = linkArray.getJSONObject(0).getString("value");
+                                        if(jsonArray.getJSONObject(i).has("images")){
+                                            linkArray = jsonArray.getJSONObject(i).getJSONArray("images");
+                                            if(linkArray.getJSONObject(3).has("url")){
+                                                imageLink = linkArray.getJSONObject(3).getString("url");
+                                            }
+                                            else{
+                                                imageLink = "https://s.s-bol.com/nl/static/images/main/noimage_124x100default.gif";
+                                            }
+
                                         }
                                         else{
                                             imageLink = "https://s.s-bol.com/nl/static/images/main/noimage_124x100default.gif";
                                         }
-
+                                        Bol bol = new Bol(title, type, price, shopLink, imageLink);
+                                        bolArray.add(bol);
                                     }
-                                    else{
-                                        imageLink = "https://s.s-bol.com/nl/static/images/main/noimage_124x100default.gif";
-                                    }
-
-
-                                    Bol bol = new Bol(title, type, price, shopLink, imageLink);
-                                    bolArray.add(bol);
-
-
+                                }
+                                Log.i("lenth", String.valueOf(bolArray.size()));
+                                if(bolArray.size() == 0){
+                                    Toast.makeText(MovieOptionActivity.this, "No products found", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    goToBol(bolArray);
                                 }
 
                             }
-
-                            goToBol(bolArray);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -295,6 +305,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Functie om de acteurs te parsen.
     public void actorParse(){
 
         RequestQueue mQueue;
@@ -314,6 +325,7 @@ public class MovieOptionActivity extends AppCompatActivity {
                         String actor;
                         JSONArray jsonArray = new JSONArray();
 
+                        //JSON wordt geparst gelijk in de textview gestopt
                         try {
                             jsonArray = response.getJSONArray("cast");
 
@@ -325,14 +337,11 @@ public class MovieOptionActivity extends AppCompatActivity {
                                     break;
                                 }
                                 txtStory.append(", ");
-
                             }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -344,6 +353,7 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Gerelateerde films ophalen.
     public void relatedParse(){
 
         RequestQueue mQueue;
@@ -360,27 +370,37 @@ public class MovieOptionActivity extends AppCompatActivity {
                         JSONArray jsonArray = new JSONArray();
                         String title, id, rating, imageLink, genres, story, year;
 
-
+                        //Gson wordt geparst
                         try {
                             jsonArray = response.getJSONArray("results");
 
-                            for(int i=0; i < jsonArray.length(); i++){
-                                title = jsonArray.getJSONObject(i).getString("title");
-                                id = jsonArray.getJSONObject(i).getString("id");
-                                rating = jsonArray.getJSONObject(i).getString("vote_average");
-                                imageLink = "http://image.tmdb.org/t/p/w185/" + jsonArray.getJSONObject(i).getString("poster_path");
-                                genres = jsonArray.getJSONObject(i).getString("genre_ids");
-                                story = jsonArray.getJSONObject(i).getString("overview");
-                                year = jsonArray.getJSONObject(i).getString("release_date");
-                                Log.i("Array", imageLink);
+                            if (jsonArray.length() == 0) {
+                                Toast.makeText(MovieOptionActivity.this, "No related movies found", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                for(int i=0; i < jsonArray.length(); i++){
+                                    title = jsonArray.getJSONObject(i).getString("title");
+                                    id = jsonArray.getJSONObject(i).getString("id");
+                                    rating = jsonArray.getJSONObject(i).getString("vote_average");
+                                    imageLink = "http://image.tmdb.org/t/p/w185/" + jsonArray.getJSONObject(i).getString("poster_path");
+                                    genres = jsonArray.getJSONObject(i).getString("genre_ids");
+                                    story = jsonArray.getJSONObject(i).getString("overview");
+                                    if(jsonArray.getJSONObject(i).getString("release_date").matches("")){
+                                        year = "unknown-unknown";
+                                    }else{
+                                        year = jsonArray.getJSONObject(i).getString("release_date");
+                                    }
+                                    Log.i("Array", imageLink);
 
-                                Movie movies = new Movie(title, id, rating, imageLink, genres, story, year, null);
-                                movieArray.add(movies);
+                                    Movie movies = new Movie(title, id, rating, imageLink, genres, story, year, null);
+                                    movieArray.add(movies);
+                                }
+
+                                Intent jumpPage = new Intent(MovieOptionActivity.this, SearchResultActivity.class);
+                                jumpPage.putExtra("JsonText", movieArray);
+                                startActivity(jumpPage);
                             }
 
-                            Intent jumpPage = new Intent(MovieOptionActivity.this, SearchResultActivity.class);
-                            jumpPage.putExtra("JsonText", movieArray);
-                            startActivity(jumpPage);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -399,12 +419,14 @@ public class MovieOptionActivity extends AppCompatActivity {
 
     }
 
+    //Functies om naar andere pagina te gaan met data van de Torrents.
     public void goToTorrent(ArrayList<Torrent> torrentArray){
         Intent jumpPage = new Intent(MovieOptionActivity.this, TorrentResultActivity.class);
         jumpPage.putExtra("dataArray", torrentArray);
         startActivity(jumpPage);
     }
 
+    //Functies om naar andere pagina te gaan met data van de Bol.com producten.
     public void goToBol(ArrayList<Bol> bolArray){
         Intent jumpPage = new Intent(MovieOptionActivity.this, BolResultActivity.class);
         jumpPage.putExtra("dataArray", bolArray);
