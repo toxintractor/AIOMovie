@@ -1,19 +1,19 @@
-#Report
+# Report
 
-###Description
+### Description
 De AIOMovie app laat de gebruiker een film zoeken. Daarna heeft de gebruiker de keuze om de film
 gelijk te kopen of eerst via Torrent te downloaden. Men kan een lijst van films krijgen van films
 die door Bol.com worden en een Lijst een Torrents van Yify.
 
-###Design
+### Design
 
-######First design
+###### First design
 <img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/advanced%20sketch.png?raw=true">
 <img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/diagrams.png?raw=true">
 
-######Final design
+###### Final design
 
-####Challenges
+### Challenges
 De grootste "challanges" waren het parsen van de JSON van de TMDB en Yify API. Omdat de sites vaak 
 crowdsourced zijn, ontbreekt er vaak informatie in de JSON objecten. Hier moet vaak rekening mee 
 gehouden worden. De API's die hiervoor gebruikt heb waren altijd volledig en de responses waren
@@ -36,7 +36,7 @@ Een andere uitdaging was het visueel design van mijn app. Ik ben hier niet zo go
 zal waarschijnlijk niet de mooiste zijn. Wel wou ik de app er simpel en overzichtelijk 
 uit laten zien. Dit is naar mijn mening vrij goed gelukt.
 
-###Decisions
+### Decisions
 Een aantal veranderingen zijn zoals eerder genoemd de zoekfunctie in de eerste activity. De 
 versimpelde zoektechniek werkt naam mijn mening wat simpeler. Ook heb ik geen apparte activity 
 gemaakt voor informatie over de film. De belangrijke informatie vind je in resultaten lijst. 
