@@ -12,6 +12,8 @@ die door Bol.com worden en een Lijst een Torrents van Yify.
 <img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/diagrams.png?raw=true">
 
 ###### Final design
+<img src="https://github.com/toxintractor/AIOMovie/blob/master/doc/finaladvacnedsketch.png?raw=true">
+
 
 ### Challenges
 De grootste "challanges" waren het parsen van de JSON van de TMDB en Yify API. Omdat de sites vaak 
