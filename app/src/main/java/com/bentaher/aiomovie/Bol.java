@@ -3,11 +3,12 @@ package com.bentaher.aiomovie;
 import java.io.Serializable;
 
 /**
- * Created by mocro on 29/01/2018.
+ * Created by Youssef on 24/01/2018.
  */
 
 public class Bol implements Serializable {
 
+    //De data voor onze datastructuur.
     public String title;
     public String type;
     public String price;

@@ -20,6 +20,8 @@ TMDB API: Toegang tot films, film data en zoeken van films.
 
 Yify API: Toegang tot filmdata, reviews en verschillende soorten torrents van een film. 
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/toxintractor/AIOMovie?branch=master)](https://bettercodehub.com/)
+
 
 
 

@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by mocro on 29/01/2018.
+ * Created by Youssef on 24/01/2018.
  */
 
 public class BolAdapter extends ArrayAdapter {
@@ -44,6 +44,7 @@ public class BolAdapter extends ArrayAdapter {
 
         final Bol tk = bolList.get(position);
 
+        //Alle data die weergegeven moet worden in de lijst.
         final String mvieTitle = tk.getTitle();
         final String mviePrice = tk.getPrice();
         final String mvieType = tk.getType();
@@ -68,6 +69,8 @@ public class BolAdapter extends ArrayAdapter {
         return  super.getCount();
     }
 
+    //onclick classe met data van een film die meegegeven moet worden.
+    //hiervan wordt een links gemaakt.
     public class GoLink implements View.OnClickListener {
 
         Bol tk1;

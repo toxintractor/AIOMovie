@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Created by mocro on 22/01/2018.
+ * Created by Youssef on 22/01/2018.
  */
+
 
 public class Movie implements Serializable {
 
+    //De data voor onze datastructuur.
     public String title;
     public String id;
     public String rating;

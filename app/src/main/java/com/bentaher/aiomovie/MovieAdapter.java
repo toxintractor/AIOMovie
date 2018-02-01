@@ -44,6 +44,7 @@ public class MovieAdapter extends ArrayAdapter {
 
         final Movie tk = movieList.get(position);
 
+        //Alle data die weergegeven moet worden in de lijst.
         final String mvieTitle = tk.getTitle();
         final String mvieYear = tk.getYear();
         final String mvieRating= tk.getRating();
@@ -66,6 +67,7 @@ public class MovieAdapter extends ArrayAdapter {
         return  super.getCount();
     }
 
+    //onclick classe met data van een film die meegegeven moet worden.
     public class GetOptions implements View.OnClickListener {
 
         Movie tk1;

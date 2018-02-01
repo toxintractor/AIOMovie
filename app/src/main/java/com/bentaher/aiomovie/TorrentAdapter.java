@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 /**
- * Created by mocro on 29/01/2018.
+ * Created by Youssef on 23/01/2018.
  */
 
 public class TorrentAdapter extends ArrayAdapter {

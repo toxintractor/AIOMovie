@@ -3,11 +3,12 @@ package com.bentaher.aiomovie;
 import java.io.Serializable;
 
 /**
- * Created by mocro on 28/01/2018.
+ * Created by Youssef on 28/01/2018.
  */
 
 public class Torrent implements Serializable {
 
+    //De data voor onze datastructuur.
     public String title;
     public String resolution;
     public String size;
